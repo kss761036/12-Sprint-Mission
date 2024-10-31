@@ -35,10 +35,10 @@ img {display: block;}
 .btn_lg {display: block; width: 357px; padding: 12px 20px; background-color: var(--blue); border-radius: 50px; color: var(--gray100); font-size: 20px; font-weight: 600; line-height: 1.6; text-align: center; transition: all 0.2s;}
 .btn_lg.gray {background-color: var(--gray400);}
 .btn_sml:focus,
-.btn_sml:hover,
-.btn_sml:active,
 .btn_lg:focus,
-.btn_lg:hover,
+.btn_sml:hover,
+.btn_lg:hover {background-color: #1967D6;}
+.btn_sml:active,
 .btn_lg:active {background-color: #1251AA;}
 .btn_lg.w100 {width: 100%;}
 
