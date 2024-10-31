@@ -91,8 +91,8 @@ img {display: block;}
 .form_box .form_inp_list > li + li {margin-top: 24px;}
 .form_box .form_inp_list > li .tit {display: block; margin-bottom: 16px; font-size: 18px; font-weight: 700; line-height: 1.4444;}
 .form_box .form_inp_list > li .desc {position: relative;}
-.form_box .form_inp_list > li .desc .btn {position: absolute; right: 24px; top: 50%; width: 24px; height: 24px; background: url(img/btn_visibility_off.svg) no-repeat 50% 50% / 24px; transform: translateY(-50%);}
-.form_box .form_inp_list > li .desc .btn.active {background: url(img/btn_visibility_on.svg) no-repeat 50% 50% / 24px;}
+.form_box .form_inp_list > li .desc .btn {position: absolute; right: 24px; top: 50%; width: 24px; height: 24px; background: url(/img/btn_visibility_off.svg) no-repeat 50% 50% / 24px; transform: translateY(-50%);}
+.form_box .form_inp_list > li .desc .btn.active {background: url(/img/btn_visibility_on.svg) no-repeat 50% 50% / 24px;}
 .form_box .form_btn {margin-top: 24px; }
 .form_box .form_btn > .a_btn {width: 100%;}
 .form_box .form_simple {display : flex; align-items: center; justify-content: space-between; margin-top: 24px; padding: 16px 23px; background-color: #E6F2FF; border-radius: 8px;}
