@@ -1,3 +1,5 @@
+@import "./mixin";
+
 :root {
     --blue: #3692FF;
     --gray900: #111827;
@@ -20,7 +22,7 @@ img {display: block;}
 
 /* common */
 /* 웹접근성 텍스트 숨김  */
-.hidden {position: absolute; clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); width: 1px; height: 1px; margin: -1px; overflow: hidden; padding: 0; }
+.hidden {position: absolute; clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); width: 1px; height: 1px; margin: -1px; overflow: hidden; padding: 0;}
 /* a태그, button태그 초기화 */
 .a_btn {display: block; -webkit-appearance: none; -moz-appearance: none; appearance: none; background: none; border: none; padding: 0; margin: 0; box-shadow: none; font: inherit; color: inherit; cursor: pointer; outline: none; }
 /* input태그 초기화 */
@@ -41,9 +43,9 @@ img {display: block;}
 .btn_lg.w100 {width: 100%;}
 
 /* header */
-.header {position: fixed; top: 0; left: 0; z-index: 100; display: grid; grid-template-columns: minmax(200px, 1fr) minmax(720px, 1120px) minmax(200px, 1fr); width: 100%; height: 70px; background-color: #fff; transition: all 0.2s;}
+.header {position: fixed; top: 0; left: 0; z-index: 100; width: 100%; height: 70px; background-color: #fff; transition: all 0.2s;}
 .header.scr {box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);}
-.header > .hd_inner {display : flex; align-items: center; justify-content: space-between; height: 100%;}
+.header > .hd_inner {display : flex; align-items: center; justify-content: space-between; max-width: 1120px; width: 100%; height: 100%; margin: 0 auto;}
 .header .logo > a img {height: 50px;}
 
 /* main */
