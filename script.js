@@ -136,3 +136,10 @@ const inputCkFn = (e) => {
 }
 
 formInputList.addEventListener('focusout',inputCkFn);
+
+// 버튼 클릭 시 페이지 이동
+document.querySelector('.form_btn > button[type="submit"]').addEventListener('click',function(e){
+    e.preventDefault();
+    let link = e.target.dataset.link;
+    location.href = link;
+});
