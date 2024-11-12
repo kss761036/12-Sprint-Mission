@@ -323,7 +323,7 @@ img {display: block;}
             display: block; margin-bottom: 16px; font-size: 18px; font-weight: 700; line-height: 1.4444;
         }
         .desc {
-            position: relative;
+            position: relative; z-index: 2;
             .btn {
                 position: absolute; right: 24px; top: 50%; width: 24px; height: 24px; background: url(/img/btn_visibility_off.svg) no-repeat 50% 50% / 24px; transform: translateY(-50%);
             }
@@ -331,7 +331,23 @@ img {display: block;}
                 background: url(/img/btn_visibility_on.svg) no-repeat 50% 50% / 24px;
             }
         }
+        .err_box {
+            position: relative; height: 32px; margin-top: -32px; padding: 8px 16px 0px; color: #F74747; font-size: 14px; font-weight: 600; line-height: 1.7142; transition: all 0.2s; opacity: 0;
+        }
     }
+    > li.err {
+        .desc {
+            > .inp {border-color: #F74747;}
+        }
+        .err_box {
+            margin-top: 0px; opacity: 1;
+        }
+    }
+    > li.suc {
+        .desc {
+            > .inp {border-color: var(--blue);}
+        }
+    } 
     > li + li {
         margin-top: 24px;
     }
