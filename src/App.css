@@ -1,0 +1,49 @@
+/* 초기화 */
+:root {
+  --black: #1F2937;
+  --gray: #F3F4F6;
+  --main: #3692FF;
+}
+
+html {overflow-y:scrolll;font-size: 10px;}
+body {margin:0;padding:0;font-size:1.6rem;background:#fff; color: var(--black);}
+body {font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;}
+html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+h1, h2, h3, h4, h5, h6 {font-size: 1.6rem; font-family:'Malgun Gothic', dotum, sans-serif}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+ul, dl,dt,dd {margin:0;padding:0;list-style:none}
+legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+label, input, button, select, img {vertical-align:middle;font-size: 1.6rem;}
+input, button {margin:0;padding:0;font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; font-size: 1.6rem;}
+input[type="submit"] {cursor:pointer}
+button {cursor:pointer}
+textarea, select {font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; font-size: 1.6rem;}
+select {margin:0}
+p {margin:0;padding:0;word-break:break-all}
+hr {display:none}
+pre {overflow-x:scroll;font-size: 1.6rem;}
+a {color: var(--black); text-decoration:none}
+*, :after, :before {
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+input[type=text],input[type=password], textarea {outline:none;}
+input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {box-shadow: none;}
+img {display: block;}
+
+/* 레이아웃 */
+#root {padding-top: 70px;}
+.inner {max-width: 1200px; width: 100%; margin: 0 auto;}
+.main {padding: 24px 0 58px;}
+
+/* 서브타이틀 */
+.subtitle {margin-bottom: 16px; color: #111827; font-size: 2.0rem; font-weight: 700; line-height: 1.6;}
+
+/* 상품박스 레이아웃 */
+.product_list {display: flex; flex-wrap: wrap; margin: 0 -6px -40px;}
+.product_list.col2 > li {width: 50%;}
+.product_list.col3 > li {width: 33.3333%;}
+.product_list.col4 > li {width: 25%;}
+.product_list.col5 > li {width: 20%;}
+.product_list > li {width: 100%; margin-bottom: 40px; padding: 0 6px;}
