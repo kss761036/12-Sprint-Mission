@@ -7,13 +7,13 @@ const ProductItem = ({item}) => {
     return(
         <div className="product_item">
             <div className="thum">
-                <a>
+                <a href="/">
                     <img src={images && images[0] ? images[0] : default_Img} alt={name} onError={(e) => e.target.src = default_Img}/>
                 </a>
             </div>
             <div className="content">
                 <div className="title">
-                    <a>{name}</a>
+                    <a href="/">{name}</a>
                 </div>
                 <div className="price">{price.toLocaleString('ko-KR')}원</div>
                 <div className="wish">
