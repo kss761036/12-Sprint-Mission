@@ -28,6 +28,7 @@ const AllProduct = ({col}) => {
 
     useEffect(() => {
         setPageSize(isMobile ? 4 : isTablet ? 6 : 10);
+        setCurrentPage(1);
     }, [isMobile, isTablet]);
 
     const handleLoad = async (orderQuery, pageSizeQuery, keywordQuery, pageQuery) => {
@@ -43,10 +44,12 @@ const AllProduct = ({col}) => {
     const handleOrderChange = (newOrder, newOrderName) => {
         setOrder(newOrder);
         setOrderName(newOrderName);
+        setCurrentPage(1);
     }
 
     const handleKeywordChange = (e) => {
         setKeyword(e.target.value);
+        setCurrentPage(1);
     }
 
     const handleSelect = (e) => {
