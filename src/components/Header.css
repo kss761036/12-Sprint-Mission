@@ -3,6 +3,16 @@
 .header .logo > a img {height: 51px;}
 .header .menu {margin-left: 32px;}
 .header .menu_list {display : flex; align-items: center;}
-.header .menu_list > li > a {display : flex; align-items: center; justify-content: center; height: 70px; padding: 0 15px; font-size: 1.8rem; font-weight: 700; line-height: 1.4444;}
-.header .menu_list > li.active > a {color: var(--main);}
+.header .menu_list > li > a {display : flex; align-items: center; justify-content: center; height: 70px; padding: 0 15px; color: #4B5563; font-size: 1.8rem; font-weight: 700; line-height: 1.4444;}
+.header .menu_list > li > a.active {color: var(--main);}
 .header .mypage {margin-left: auto;}
+
+@media (max-width: 1520px) {
+    .header > .inner {padding-left: 24px; padding-right: 24px;}
+}
+
+@media (max-width: 768px) {
+    .header .logo > a img {height: 40px;}
+    .header .menu {margin-left: 4px;}
+    .header .menu_list > li > a {padding: 0 4px; font-size: 1.8rem;}
+}

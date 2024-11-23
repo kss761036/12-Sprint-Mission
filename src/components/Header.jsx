@@ -1,23 +1,33 @@
+import { useMediaQuery } from "react-responsive";
+import { NavLink } from "react-router-dom";
 import logo from "./../assets/logo.svg";
+import logoM from "./../assets/logo_m.svg";
 import mypage from "./../assets/mypage_btn.svg";
 import "./Header.css";
 
 const Header = () => {
+
+    const isMobile = useMediaQuery({
+        query: "(max-width: 768px)",
+    });
+
     return(
         <div className="header">
             <div className="inner">
                 <div className="logo">
-                    <a href="">
-                        <img src={logo} alt="판다마켓 로고" />
+                    <a href="/">
+                        {
+                            isMobile ? <img src={logoM} alt="판다마켓 로고" /> : <img src={logo} alt="판다마켓 로고" />
+                        }
                     </a>
                 </div>
                 <nav className="menu">
                     <ul className="menu_list">
                         <li>
-                            <a href="">자유게시판</a>
+                            <NavLink to="/freeboard" className={({ isActive }) => (isActive ? "active" : "")}>자유게시판</NavLink>
                         </li>
-                        <li className="active">
-                            <a href="">중고마켓</a>
+                        <li>
+                            <NavLink to="/items" className={({ isActive }) => (isActive ? "active" : "")}>중고마켓</NavLink>
                         </li>
                     </ul>
                 </nav>
