@@ -3,7 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import MainPage from './page/MainPage';
 import ItemsPage from './page/ItemsPage';
-import AddItemPage from './page/AdditemPage';
+import AddItemPage from './page/AddItemPage';
 import FreeBoardPage from './page/FreeBoardPage';
 
 function App() {
