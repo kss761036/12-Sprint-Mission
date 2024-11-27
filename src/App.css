@@ -39,7 +39,7 @@ img {display: block;}
 .btn_blue {min-width: 88px; height: 42px; padding: 0 23px; background-color: var(--main); border-radius: 12px; color: #F3F4F6; text-align: center; font-size: 1.6rem; font-weight: 600; line-height: 42px; transition: all 0.2s;}
 .btn_blue:hover {background-color: #1967D6;}
 .btn_blue:active {background-color: #1251AA;}
-.btn_blue:disabled {background-color:  #9CA3AF;}
+.btn_blue:disabled {background-color:  #9CA3AF; cursor: not-allowed;}
 
 .btn_blue.sml {min-width: 74px; border-radius: 8px; font-weight: 400;}
 

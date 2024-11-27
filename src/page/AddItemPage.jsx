@@ -9,14 +9,10 @@ const AddItemPage = () => {
     name: "",
     introduce: "",
     price: "",
+    imgFile: null,
   });
 
-  // const [name, setName] = useState("");
-  // const [introduce, seIntroduce] = useState("");
-  // const [price, setPrice] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (name, value) => {
     if (name === "price") {
       const priceValue = value.replaceAll(",", "");
       const nextPrice = Number(priceValue) || 0;
@@ -32,23 +28,13 @@ const AddItemPage = () => {
     }
   };
 
-  const handleFileChange = (e) => {};
-
-  // const handleNameChange = (e) => {
-  //   setName(e.target.value);
-  // };
-  // const handleIntroduceChange = (e) => {
-  //   seIntroduce(e.target.value);
-  // };
-  // const handlePriceChange = (e) => {
-  //   const priceValue = e.target.value.replaceAll(",", "");
-  //   const nextPrice = Number(priceValue) || 0;
-  //   setPrice(nextPrice.toLocaleString());
-  // };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    handleChange(name, value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputValue);
   };
 
   return (
@@ -66,11 +52,11 @@ const AddItemPage = () => {
           <div className="add_form">
             <ul className="add_form_list">
               <li>
-                <label htmlFor="add_img" className="title">
+                <div htmlFor="add_img" className="title">
                   상품이미지
-                </label>
-                <div className="input_box">
-                  <FileInput name="img" onChange={handleFileChange} />
+                </div>
+                <div className="input_box input_file_box">
+                  <FileInput name="imgFile" value={inputValue.imgFile} onChange={handleChange} />
                 </div>
               </li>
               <li>
@@ -78,7 +64,7 @@ const AddItemPage = () => {
                   상품명
                 </label>
                 <div className="input_box">
-                  <input type="text" id="add_name" name="name" className="inp_reset" value={inputValue.name} onChange={handleChange} placeholder="상품명을 입력해주세요" />
+                  <input type="text" id="add_name" name="name" className="inp_reset" value={inputValue.name} onChange={handleInputChange} placeholder="상품명을 입력해주세요" />
                 </div>
               </li>
               <li>
@@ -86,7 +72,7 @@ const AddItemPage = () => {
                   상품 소개
                 </label>
                 <div className="input_box">
-                  <textarea id="add_introduce" name="introduce" className="inp_reset" value={inputValue.introduce} onChange={handleChange} placeholder="상품 소개를 입력해주세요"></textarea>
+                  <textarea id="add_introduce" name="introduce" className="inp_reset" value={inputValue.introduce} onChange={handleInputChange} placeholder="상품 소개를 입력해주세요"></textarea>
                 </div>
               </li>
               <li>
@@ -94,7 +80,7 @@ const AddItemPage = () => {
                   판매가격
                 </label>
                 <div className="input_box">
-                  <input type="text" id="add_price" name="price" className="inp_reset" value={inputValue.price} onChange={handleChange} placeholder="판매 가격을 입력해주세요" />
+                  <input type="text" id="add_price" name="price" className="inp_reset" value={inputValue.price} onChange={handleInputChange} placeholder="판매 가격을 입력해주세요" />
                 </div>
               </li>
               <li>
