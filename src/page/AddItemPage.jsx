@@ -60,6 +60,29 @@ const AddItemPage = () => {
 
   const tagList = inputValue.tag.split("|");
 
+  const handleTagRemove = (tagName) => {
+    setInputValue((prev) => {
+      const tagUpdate = prev.tag
+        .split("|")
+        .filter((tag) => tag !== tagName)
+        .join("|");
+
+      return {
+        ...prev,
+        tag: tagUpdate,
+      };
+    });
+  };
+
+  const [submitCheck, setSubmitCheck] = useState(true);
+  useEffect(() => {
+    if (inputValue.name && inputValue.introduce && inputValue.price && inputValue.price !== "0" && inputValue.tag) {
+      setSubmitCheck(false);
+    } else {
+      setSubmitCheck(true);
+    }
+  }, [inputValue]);
+
   return (
     <form onSubmit={handleSubmit}>
       <main className="main">
@@ -67,7 +90,7 @@ const AddItemPage = () => {
           <div className="tit_box">
             <SubTitle name="상품 등록하기" />
             <div className="add_submit">
-              <button type="submit" className="btn_blue sml">
+              <button type="submit" className="btn_blue sml" disabled={submitCheck}>
                 등록
               </button>
             </div>
@@ -114,16 +137,18 @@ const AddItemPage = () => {
                   <input type="text" id="add_tag" className="inp_reset" placeholder="태그를 입력해주세요" onKeyDown={handleTagChange} onChange={handleFakeTag} value={fakeTag} />
                 </div>
 
-                <ul className="tag_list">
-                  {tagList.map((el, idx) => (
-                    <li key={idx}>
-                      <span>#{el}</span>
-                      <button type="button" className="btn_reset remove">
-                        <img src={removeIcon} alt={`${el} 삭제하기`} />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                {inputValue.tag && (
+                  <ul className="tag_list">
+                    {tagList.map((el, idx) => (
+                      <li key={idx}>
+                        <span>#{el}</span>
+                        <button type="button" className="btn_reset remove" onClick={() => handleTagRemove(el)}>
+                          <img src={removeIcon} alt={`${el} 삭제하기`} />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             </ul>
           </div>
