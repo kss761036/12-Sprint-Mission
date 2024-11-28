@@ -2,7 +2,7 @@ import SubTitle from "./../components/SubTitle";
 import "./AddItemPage.css";
 import removeIcon from "./../assets/icon_remove.svg";
 import FileInput from "./../components/FileInput";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const AddItemPage = () => {
   const [inputValue, setInputValue] = useState({
@@ -10,6 +10,7 @@ const AddItemPage = () => {
     introduce: "",
     price: "",
     imgFile: null,
+    tag: "",
   });
 
   const handleChange = (name, value) => {
@@ -19,6 +20,11 @@ const AddItemPage = () => {
       setInputValue((prev) => ({
         ...prev,
         [name]: nextPrice.toLocaleString(),
+      }));
+    } else if (name === "tag") {
+      setInputValue((prev) => ({
+        ...prev,
+        [name]: prev[name] ? `${prev[name]}|${value}` : value,
       }));
     } else {
       setInputValue((prev) => ({
@@ -34,8 +40,25 @@ const AddItemPage = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
   };
+
+  const [fakeTag, setFakeTag] = useState("");
+
+  const handleFakeTag = (e) => {
+    setFakeTag(e.target.value);
+  };
+
+  const handleTagChange = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      handleChange("tag", fakeTag);
+      e.target.value = "";
+      setFakeTag("");
+    }
+  };
+
+  const tagList = inputValue.tag.split("|");
 
   return (
     <form onSubmit={handleSubmit}>
@@ -88,21 +111,18 @@ const AddItemPage = () => {
                   태그
                 </label>
                 <div className="input_box">
-                  <input type="text" id="add_tag" className="inp_reset" placeholder="태그를 입력해주세요" />
+                  <input type="text" id="add_tag" className="inp_reset" placeholder="태그를 입력해주세요" onKeyDown={handleTagChange} onChange={handleFakeTag} value={fakeTag} />
                 </div>
+
                 <ul className="tag_list">
-                  <li>
-                    <span>#티셔츠</span>
-                    <button className="btn_reset remove">
-                      <img src={removeIcon} alt="티셔츠 삭제하기" />
-                    </button>
-                  </li>
-                  <li>
-                    <span>#상의</span>
-                    <button type="button" className="btn_reset remove">
-                      <img src={removeIcon} alt="상의 삭제하기" />
-                    </button>
-                  </li>
+                  {tagList.map((el, idx) => (
+                    <li key={idx}>
+                      <span>#{el}</span>
+                      <button type="button" className="btn_reset remove">
+                        <img src={removeIcon} alt={`${el} 삭제하기`} />
+                      </button>
+                    </li>
+                  ))}
                 </ul>
               </li>
             </ul>

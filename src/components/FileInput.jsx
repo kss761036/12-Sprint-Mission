@@ -41,7 +41,7 @@ function FileInput({ name, value, onChange }) {
           <span>이미지 등록</span>
         </label>
 
-        {limit && <div className="limit_text">*이미지 등록은 최대 1개까지 가능합니다.</div>}
+        <div className={`limit_text ${limit && "active"}`}>*이미지 등록은 최대 1개까지 가능합니다.</div>
       </div>
       {fileImg && (
         <ul className="file_img_list">
