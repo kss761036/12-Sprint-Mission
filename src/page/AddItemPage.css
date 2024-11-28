@@ -21,3 +21,26 @@
 
 .limit_text {position: relative; z-index: -1; margin-top: -26px; color: #F74747; font-size: 1.6rem; line-height: 1.625; opacity: 0; transition: all 0.2s ease-in-out;}
 .limit_text.active {opacity: 1; margin-top: 16px; margin-bottom: -8px;}
+
+@media (max-width: 1200px) {
+  .add_form_list > li + li {margin-top: 24px;}
+  .add_form_list > li .input_file_box label {width: 168px; height: 168px;}
+  .add_form_list > li .input_file_box .file_img_list > li {width: 168px; height: 168px; margin-left: 10px;}
+  .limit_text {width: 168px; white-space: nowrap; font-size: 1.4rem;}
+}
+
+@media (max-width: 768px) {
+  .add_form_list > li .input_file_box {justify-content: space-between;}
+  .add_form_list > li .input_file_box .file_add_wrap {position: relative; width: calc(50% - 5px); height: 0; padding-top: calc(50% - 5px);}
+  .add_form_list > li .input_file_box label {position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+
+  .add_form_list > li .input_file_box:has( .limit_text.active) .file_add_wrap {padding-top: calc(50% + 15px);}
+  .add_form_list > li .input_file_box:has( .limit_text.active) label {height: calc(100% - 20px);}
+
+  .add_form_list > li .input_file_box .file_img_list {position: relative; width: calc(50% - 5px); height: 0; padding-top: calc(50% - 5px);}
+  .add_form_list > li .input_file_box .file_img_list > li {position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin-left: 0;}
+
+  .limit_text {margin-top: -50px;}
+  .limit_text.active {margin-top: -13px;}
+  
+}
