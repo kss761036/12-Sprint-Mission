@@ -1,6 +1,7 @@
 import addImg from "./../assets/icon_add.svg";
 import removeIcon from "./../assets/icon_remove.svg";
 import { useEffect, useState, useRef } from "react";
+import "./FileInput.css";
 
 function FileInput({ name, value, onChange }) {
   const handleFileChange = (e) => {
@@ -47,7 +48,7 @@ function FileInput({ name, value, onChange }) {
         <ul className="file_img_list">
           <li>
             <button type="button" onClick={handlePreviewRemove} className="btn_reset remove_btn">
-              <img src={removeIcon} alt="티셔츠 삭제하기" />
+              <img src={removeIcon} alt="삭제하기" />
             </button>
             <img src={fileImg} alt="" />
           </li>

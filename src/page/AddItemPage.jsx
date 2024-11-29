@@ -1,17 +1,26 @@
 import SubTitle from "./../components/SubTitle";
 import "./AddItemPage.css";
 import removeIcon from "./../assets/icon_remove.svg";
-import FileInput from "./../components/FileInput";
-import { useState, useEffect, useRef } from "react";
+import FormItem from "./../components/FormItem";
+import { useState, useEffect } from "react";
+import FormLabel from "./../components/FormLabel";
+import "./../components/FormLabel.css";
 
 const AddItemPage = () => {
+  const [fakeTag, setFakeTag] = useState("");
   const [inputValue, setInputValue] = useState({
     name: "",
     introduce: "",
     price: "",
-    imgFile: null,
+    imgFile: "",
     tag: "",
   });
+
+  const tagList = inputValue.tag.split("|");
+
+  const handleSubmit = (e) => {
+    //e.preventDefault();
+  };
 
   const handleChange = (name, value) => {
     if (name === "price") {
@@ -39,12 +48,6 @@ const AddItemPage = () => {
     handleChange(name, value);
   };
 
-  const handleSubmit = (e) => {
-    //e.preventDefault();
-  };
-
-  const [fakeTag, setFakeTag] = useState("");
-
   const handleFakeTag = (e) => {
     setFakeTag(e.target.value);
   };
@@ -57,8 +60,6 @@ const AddItemPage = () => {
       setFakeTag("");
     }
   };
-
-  const tagList = inputValue.tag.split("|");
 
   const handleTagRemove = (tagName) => {
     setInputValue((prev) => {
@@ -97,46 +98,15 @@ const AddItemPage = () => {
           </div>
           <div className="add_form">
             <ul className="add_form_list">
+              <FormItem labelName="상품이미지" type="file" id="add_img" name="imgFile" className="imgFile" value={inputValue.imgFile} onChange={handleChange} />
+              <FormItem labelName="상품명" type="text" id="add_name" name="name" className="inp_reset" value={inputValue.name} onChange={handleInputChange} placeholder="상품명을 입력해주세요" />
+              <FormItem labelName="상품 소개" type="textarea" id="add_introduce" name="introduce" className="inp_reset" value={inputValue.introduce} onChange={handleInputChange} placeholder="상품 소개를 입력해주세요" />
+              <FormItem labelName="판매 가격" type="text" id="add_price" name="price" className="inp_reset" value={inputValue.price} onChange={handleInputChange} placeholder="판매 가격을 입력해주세요" />
               <li>
-                <div htmlFor="add_img" className="title">
-                  상품이미지
-                </div>
-                <div className="input_box input_file_box">
-                  <FileInput name="imgFile" value={inputValue.imgFile} onChange={handleChange} />
-                </div>
-              </li>
-              <li>
-                <label htmlFor="add_name" className="title">
-                  상품명
-                </label>
-                <div className="input_box">
-                  <input type="text" id="add_name" name="name" className="inp_reset" value={inputValue.name} onChange={handleInputChange} placeholder="상품명을 입력해주세요" />
-                </div>
-              </li>
-              <li>
-                <label htmlFor="add_introduce" className="title">
-                  상품 소개
-                </label>
-                <div className="input_box">
-                  <textarea id="add_introduce" name="introduce" className="inp_reset" value={inputValue.introduce} onChange={handleInputChange} placeholder="상품 소개를 입력해주세요"></textarea>
-                </div>
-              </li>
-              <li>
-                <label htmlFor="add_price" className="title">
-                  판매가격
-                </label>
-                <div className="input_box">
-                  <input type="text" id="add_price" name="price" className="inp_reset" value={inputValue.price} onChange={handleInputChange} placeholder="판매 가격을 입력해주세요" />
-                </div>
-              </li>
-              <li>
-                <label htmlFor="add_tag" className="title">
-                  태그
-                </label>
+                <FormLabel htmlFor="add_tag" labelName="태그" />
                 <div className="input_box">
                   <input type="text" id="add_tag" className="inp_reset" placeholder="태그를 입력해주세요" onKeyDown={handleTagChange} onChange={handleFakeTag} value={fakeTag} />
                 </div>
-
                 {inputValue.tag && (
                   <ul className="tag_list">
                     {tagList.map((el, idx) => (
