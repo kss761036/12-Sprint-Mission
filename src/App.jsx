@@ -16,7 +16,7 @@ function App() {
         <Route path="/items" element={<ItemsPage />} />
         <Route path="/additem" element={<AddItemPage />} />
         <Route path="/freeboard" element={<FreeBoardPage />} />
-        <Route path="/ProductDetail" element={<ProductDetailPage />} />
+        <Route path="/ProductDetail/:id" element={<ProductDetailPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -29,13 +29,15 @@
 .product_detail_comment .comment_top .textarea_box textarea::placeholder {color: #9CA3AF;}
 .product_detail_comment .comment_top > button {margin-left: auto;}
 .product_detail_comment .comment_list {margin-top: 24px;}
-.product_detail_comment .comment_list > li {position: relative; padding-bottom: 12px; border-bottom: 1px solid #E5E7EB;}
+.product_detail_comment .comment_list > li {position: relative; padding-bottom: 12px; padding-right: 40px; border-bottom: 1px solid #E5E7EB; word-break: keep-all;}
 .product_detail_comment .comment_list > li + li {margin-top: 24px;}
 .product_detail_comment .comment_list > li .comment_menu {position: absolute; top: 0; right: 0;}
-.product_detail_comment .comment_list > li .comment_menu > button {display : flex; align-items: center; justify-content: center; width: 24px; height: 24px; }
-.product_detail_comment .comment_list > li .comment_menu > ul {display: none; position: absolute; top: calc(100% + 10px); right: 0; border: 1px solid #D1D5DB; border-radius: 8px; background-color: #fff;}
+.product_detail_comment .comment_list > li .comment_menu > button {display : flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 4px; transition: all 0.2s;}
+.product_detail_comment .comment_list > li .comment_menu > button:hover {background: #f3f4f6;}
+.product_detail_comment .comment_list > li .comment_menu > ul {position: absolute; top: calc(100% + 10px); right: 0; border: 1px solid #D1D5DB; border-radius: 8px; background-color: #fff; overflow: hidden;}
 .product_detail_comment .comment_list > li .comment_menu > ul > li {}
-.product_detail_comment .comment_list > li .comment_menu > ul > li > button {width: 140px; height: 46px; text-align: center; color: #6B7280; font-size: 1.6rem;}
+.product_detail_comment .comment_list > li .comment_menu > ul > li > button {width: 140px; height: 46px; text-align: center; color: #6B7280; font-size: 1.6rem; transition: all 0.2s;}
+.product_detail_comment .comment_list > li .comment_menu > ul > li > button:hover {background: #f3f4f6;}
 .product_detail_comment .comment_list > li .text_area {font-size: 1.4rem; font-weight: 400; line-height: 1.7142;}
 .product_detail_comment .comment_list > li .name_area {display : flex; align-items: center; margin-top: 24px;}
 .product_detail_comment .comment_list > li .name_area .profile {width: 40px; height: 40px;  border-radius: 50px; overflow: hidden;}

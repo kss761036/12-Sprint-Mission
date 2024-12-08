@@ -2,52 +2,118 @@ import productImg from "./../assets/item.png";
 import wishIcon from "./../assets/icon_wish.svg";
 import menuIcon from "./../assets/menu_dot.svg";
 import backIcon from "./../assets/icon_back.svg";
+import profileIcon from "./../assets/icon_profile.png";
 import "./ProductDetailPage.css";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProductDetailPage = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [comment, setComment] = useState([]);
+
+  const [commentMenu, setCommentMenu] = useState(null);
+
+  const [textValue, setTextValue] = useState("");
+
+  const handleTextChange = (e) => {
+    setTextValue(e.target.value);
+  };
+
+  const handleCommentMenu = (id) => {
+    setCommentMenu(commentMenu === id ? null : id);
+  };
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`https://panda-market-api.vercel.app/products/${id}`);
+        setProduct(response.data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`https://panda-market-api.vercel.app/products/${id}/comments?limit=10`);
+        setComment(response.data.list);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
+  const dateString = product.createdAt;
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const formattedDate = `${year}.${month}.${day}`;
+
   return (
     <main className="main">
       <div className="inner">
         <div className="product_detaile_wrap">
           <div className="product_detail_item">
             <div className="thum">
-              <img src={productImg} alt="" />
+              <img src={product.images && product.images[0] ? product.images[0] : productImg} alt={product.name} onError={(e) => (e.target.src = productImg)} />
             </div>
             <div className="content">
-              <div className="tit">아이패드 미니 팔아요</div>
-              <div className="price">500,000원</div>
+              <div className="tit">{product.name}</div>
+              <div className="price">{product.price.toLocaleString("ko-KR")}원</div>
               <div className="info">
                 <p>상품 소개</p>
-                <div className="desc">
-                  액정에 잔기스랑 주변부 스크래치있습니다만 예민하신분아니면 전혀 신경쓰이지않을정도입니다. <br />
-                  박스 보관중입니다. <br />
-                  메모용과 넷플릭스용으로만쓰던거라 뭘 해보질 않아 기능이나 문제점을 못느꼈네요
-                  <br />잘 안써서 싸게넘깁니다! 택배거래안합니다.
-                </div>
+                <div className="desc">{product.description}</div>
               </div>
               <div className="info">
                 <p>상품 태그</p>
                 <ul className="tag">
-                  <li>#아이패드미니</li>
-                  <li>#애플</li>
-                  <li>#가성비</li>
+                  {product.tags.map((el) => (
+                    <li key={el}>#{el}</li>
+                  ))}
                 </ul>
               </div>
               <div className="profile_box">
                 <div className="name_area">
                   <div className="profile">
-                    <img src={productImg} alt="" />
+                    <img src={profileIcon} alt="" />
                   </div>
                   <div className="name">
-                    <p>총명한판다</p>
-                    <div className="date">2024.01.02</div>
+                    <p>{product.ownerNickname}</p>
+                    <div className="date">{formattedDate}</div>
                   </div>
                 </div>
                 <button className="btn_reset wish_area">
                   <div className="icon">
                     <img src={wishIcon} alt="" />
                   </div>
-                  <div className="numb">123</div>
+                  <div className="numb">{product.favoriteCount}</div>
                 </button>
               </div>
             </div>
@@ -56,106 +122,58 @@ const ProductDetailPage = () => {
             <div className="comment_top">
               <div className="tit">문의하기</div>
               <div className="textarea_box">
-                <textarea className="inp_reset" name="" id="" placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."></textarea>
+                <textarea
+                  className="inp_reset"
+                  name=""
+                  id=""
+                  onChange={handleTextChange}
+                  value={textValue}
+                  placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."></textarea>
               </div>
-              <button type="button" className="btn_blue sml" disabled>
+              <button type="button" className="btn_blue sml" disabled={textValue !== "" ? false : true}>
                 등록
               </button>
             </div>
             <ul className="comment_list">
-              <li>
-                <div className="comment_menu">
-                  <button type="button" className="btn_reset">
-                    <img src={menuIcon} alt="" />
-                  </button>
-                  <ul>
-                    <li>
-                      <button type="button" className="btn_reset">
-                        수정하기
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" className="btn_reset">
-                        삭제하기
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-                <div className="text_area">혹시 사용기간이 어떻게 되실까요?</div>
-                <div className="name_area">
-                  <div className="profile">
-                    <img src={productImg} alt="" />
+              {comment.map((el) => (
+                <li key={el.id}>
+                  <div className="comment_menu">
+                    <button type="button" className="btn_reset" onClick={() => handleCommentMenu(el.id)}>
+                      <img src={menuIcon} alt="" />
+                    </button>
+                    {commentMenu === el.id && (
+                      <ul>
+                        <li>
+                          <button type="button" className="btn_reset">
+                            수정하기
+                          </button>
+                        </li>
+                        <li>
+                          <button type="button" className="btn_reset">
+                            삭제하기
+                          </button>
+                        </li>
+                      </ul>
+                    )}
                   </div>
-                  <div className="name">
-                    <p>총명한판다</p>
-                    <div className="date">2024.01.02</div>
+                  <div className="text_area">{el.content}</div>
+                  <div className="name_area">
+                    <div className="profile">
+                      <img src={el.writer.image ? el.writer.image : profileIcon} alt={el.writer.nickname} onError={(e) => (e.target.src = profileIcon)} />
+                    </div>
+                    <div className="name">
+                      <p>{el.writer.nickname}</p>
+                      <div className="date">{el.writer.updatedAt}</div>
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li>
-                <div className="comment_menu">
-                  <button type="button" className="btn_reset">
-                    <img src={menuIcon} alt="" />
-                  </button>
-                  <ul>
-                    <li>
-                      <button type="button" className="btn_reset">
-                        수정하기
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" className="btn_reset">
-                        삭제하기
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-                <div className="text_area">혹시 사용기간이 어떻게 되실까요?</div>
-                <div className="name_area">
-                  <div className="profile">
-                    <img src={productImg} alt="" />
-                  </div>
-                  <div className="name">
-                    <p>총명한판다</p>
-                    <div className="date">2024.01.02</div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="comment_menu">
-                  <button type="button" className="btn_reset">
-                    <img src={menuIcon} alt="" />
-                  </button>
-                  <ul>
-                    <li>
-                      <button type="button" className="btn_reset">
-                        수정하기
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" className="btn_reset">
-                        삭제하기
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-                <div className="text_area">혹시 사용기간이 어떻게 되실까요?</div>
-                <div className="name_area">
-                  <div className="profile">
-                    <img src={productImg} alt="" />
-                  </div>
-                  <div className="name">
-                    <p>총명한판다</p>
-                    <div className="date">2024.01.02</div>
-                  </div>
-                </div>
-              </li>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="detail_btn">
-            <button type="button" className="btn_blue lg">
+            <Link to="/items" className="btn_blue lg">
               목록으로 돌아가기 <img src={backIcon} alt="" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
