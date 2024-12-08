@@ -10,15 +10,11 @@
 .product_detail_item .content .info > p {margin-bottom: 16px; font-size: 1.6rem; font-weight: 600; line-height: 1.625;}
 .product_detail_item .content .info > .desc {color: #4B5563; font-size: 1.6rem; line-height: 1.625;}
 .product_detail_item .content .info > .tag {display : flex; flex-wrap: wrap; gap:8px; }
-.product_detail_item .content .info > .tag > li {padding: 6px 16px; background-color: #F3F4F6; border-radius: 50px; font-size: 1.6rem; font-weight: 400; line-height: 1.625; }
+.product_detail_item .content .info > .tag > li {padding: 6px 16px; background-color: #F3F4F6; border-radius: 50px; font-size: 1.6rem; font-weight: 400; line-height: 1.625; transition: all 0.2s; cursor: pointer;}
+.product_detail_item .content .info > .tag > li:hover {box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);}
 .product_detail_item .content .profile_box {display : flex; align-items: center; margin-top: auto; }
-.product_detail_item .content .profile_box .name_area {display : flex; align-items: center;}
-.product_detail_item .content .profile_box .name_area .profile {width: 40px; height: 40px;  border-radius: 50px; overflow: hidden;}
-.product_detail_item .content .profile_box .name_area .profile img {width: 100%; height: 100%; object-fit: cover;}
-.product_detail_item .content .profile_box .name_area .name {margin-left: 16px;}
-.product_detail_item .content .profile_box .name_area .name > p {font-size: 1.4rem; font-weight: 500; line-height: 1.7142;}
-.product_detail_item .content .profile_box .name_area .name > .date {color: #9CA3AF; font-size: 1.4rem; font-weight: 400; line-height: 1.7142;}
-.product_detail_item .content .profile_box .wish_area {position: relative; margin-left: auto; display : flex; align-items: center; padding: 4px 12px; border: 1px solid #E5E7EB; border-radius: 35px; }
+.product_detail_item .content .profile_box .wish_area {position: relative; margin-left: auto; display : flex; align-items: center; padding: 4px 12px; border: 1px solid #E5E7EB; border-radius: 35px; transition: all 0.2s;}
+.product_detail_item .content .profile_box .wish_area:hover {box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);}
 .product_detail_item .content .profile_box .wish_area::before {content: ''; width: 1px; height: 34px; background-color: #E5E7EB; position: absolute; left: -24px; top: 50%; transform: translateY(-50%);}
 .product_detail_item .content .profile_box .wish_area .icon img {height: 24px;}
 .product_detail_item .content .profile_box .wish_area .numb {margin-left: 4px; color: #6B7280; font-size: 1.6rem; font-weight: 500; line-height: 1.625;}
@@ -38,13 +34,8 @@
 .product_detail_comment .comment_list > li .comment_menu > ul > li {}
 .product_detail_comment .comment_list > li .comment_menu > ul > li > button {width: 140px; height: 46px; text-align: center; color: #6B7280; font-size: 1.6rem; transition: all 0.2s;}
 .product_detail_comment .comment_list > li .comment_menu > ul > li > button:hover {background: #f3f4f6;}
-.product_detail_comment .comment_list > li .text_area {font-size: 1.4rem; font-weight: 400; line-height: 1.7142;}
-.product_detail_comment .comment_list > li .name_area {display : flex; align-items: center; margin-top: 24px;}
-.product_detail_comment .comment_list > li .name_area .profile {width: 40px; height: 40px;  border-radius: 50px; overflow: hidden;}
-.product_detail_comment .comment_list > li .name_area .profile img {width: 100%; height: 100%; object-fit: cover;}
-.product_detail_comment .comment_list > li .name_area .name {margin-left: 16px;}
-.product_detail_comment .comment_list > li .name_area .name > p {font-size: 1.4rem; font-weight: 500; line-height: 1.7142;}
-.product_detail_comment .comment_list > li .name_area .name > .date {color: #9CA3AF; font-size: 1.4rem; font-weight: 400; line-height: 1.7142;}
+.product_detail_comment .comment_list > li .text_area {margin-bottom: 24px; font-size: 1.4rem; font-weight: 400; line-height: 1.7142;}
+
 .detail_btn {margin-top: 64px; display : flex; justify-content: center;}
 .detail_btn .btn_blue {display : flex; align-items: center; justify-content: center;}
 .detail_btn .btn_blue img {margin-left: 8px;}

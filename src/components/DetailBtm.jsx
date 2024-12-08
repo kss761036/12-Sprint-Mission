@@ -1,15 +1,11 @@
 import menuIcon from "./../assets/menu_dot.svg";
-import profileIcon from "./../assets/icon_profile.png";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import useApi from "./../hooks/useApi";
+import ProfileBox from "./ProfileBox";
 
 const DetailBtm = ({ id }) => {
-  const [comment, setComment] = useState([]);
   const [commentMenu, setCommentMenu] = useState(null);
   const [textValue, setTextValue] = useState("");
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const handleTextChange = (e) => {
     setTextValue(e.target.value);
@@ -19,19 +15,7 @@ const DetailBtm = ({ id }) => {
     setCommentMenu(commentMenu === id ? null : id);
   };
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(`https://panda-market-api.vercel.app/products/${id}/comments?limit=10`);
-        setComment(response.data.list);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProduct();
-  }, [id]);
+  const { data, loading, error } = useApi(`https://panda-market-api.vercel.app/products/${id}/comments?limit=10`);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -59,14 +43,7 @@ const DetailBtm = ({ id }) => {
         </button>
       </div>
       <ul className="comment_list">
-        {comment.map((el) => {
-          const dateString = el.updatedAt;
-          const date = new Date(dateString);
-          const year = date.getFullYear();
-          const month = String(date.getMonth() + 1).padStart(2, "0");
-          const day = String(date.getDate()).padStart(2, "0");
-          const formattedDate = `${year}.${month}.${day}`;
-
+        {data.list.map((el) => {
           return (
             <li key={el.id}>
               <div className="comment_menu">
@@ -89,15 +66,7 @@ const DetailBtm = ({ id }) => {
                 )}
               </div>
               <div className="text_area">{el.content}</div>
-              <div className="name_area">
-                <div className="profile">
-                  <img src={el.writer.image ? el.writer.image : profileIcon} alt={el.writer.nickname} onError={(e) => (e.target.src = profileIcon)} />
-                </div>
-                <div className="name">
-                  <p>{el.writer.nickname}</p>
-                  <div className="date">{formattedDate}</div>
-                </div>
-              </div>
+              <ProfileBox img={el.writer.image} name={el.writer.nickname} date={el.updatedAt} />
             </li>
           );
         })}
