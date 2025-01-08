@@ -2,8 +2,8 @@ import backIcon from "./../assets/icon_back.svg";
 import "./ProductDetailPage.css";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import DetailTop from "./../components/DetailTop";
-import DetailBtm from "./../components/DetailBtm";
+import DetailTop from "../components/DetailTop";
+import DetailBtm from "../components/DetailBtm";
 
 const ProductDetailPage = () => {
   const { id } = useParams();

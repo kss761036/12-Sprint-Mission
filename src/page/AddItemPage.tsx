@@ -1,9 +1,9 @@
-import SubTitle from "./../components/SubTitle";
+import SubTitle from "../components/SubTitle";
 import "./AddItemPage.css";
 import removeIcon from "./../assets/icon_remove.svg";
-import FormItem from "./../components/FormItem";
+import FormItem from "../components/FormItem";
 import { useState, useEffect } from "react";
-import FormLabel from "./../components/FormLabel";
+import FormLabel from "../components/FormLabel";
 import "./../components/FormLabel.css";
 
 const AddItemPage = () => {
