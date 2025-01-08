@@ -1,10 +1,7 @@
 import backIcon from "./../assets/icon_back.svg";
-
 import "./ProductDetailPage.css";
-
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-
 import DetailTop from "./../components/DetailTop";
 import DetailBtm from "./../components/DetailBtm";
 
@@ -14,12 +11,12 @@ const ProductDetailPage = () => {
   return (
     <main className="main">
       <div className="inner">
-        <div className="product_detaile_wrap">
+        <div className="product_detail_wrap">
           <DetailTop id={id} />
           <DetailBtm id={id} />
           <div className="detail_btn">
             <Link to="/items" className="btn_blue lg">
-              목록으로 돌아가기 <img src={backIcon} alt="" />
+              목록으로 돌아가기 <img src={backIcon} alt="목록으로 돌아가기" />
             </Link>
           </div>
         </div>

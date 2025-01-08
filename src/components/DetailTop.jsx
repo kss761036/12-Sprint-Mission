@@ -1,10 +1,11 @@
+import "./DetailTop.css";
 import productImg from "./../assets/item.png";
 import wishIcon from "./../assets/icon_wish.svg";
 import useApi from "./../hooks/useApi";
 import ProfileBox from "./ProfileBox";
 
 const DetailTop = ({ id }) => {
-  const { data, loading, error } = useApi(`https://panda-market-api.vercel.app/products/${id}`);
+  const { data, loading, error } = useApi(`${id}`);
 
   if (loading) {
     return <div>Loading...</div>;

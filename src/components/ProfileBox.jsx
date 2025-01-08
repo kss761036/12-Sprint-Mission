@@ -1,5 +1,5 @@
 import profileIcon from "./../assets/icon_profile.png";
-import useDate from "./../hooks/useDate";
+import useDate from "../utils/formatDate";
 import "./ProfileBox.css";
 
 const ProfileBox = ({ img, name, date }) => {

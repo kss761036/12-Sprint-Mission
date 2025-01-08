@@ -1,7 +1,10 @@
+import "./DetailBtm.css";
 import menuIcon from "./../assets/menu_dot.svg";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import useApi from "./../hooks/useApi";
 import ProfileBox from "./ProfileBox";
+import CommentEmpty from "./../assets/comment_empty.png";
+import useOutSideClick from "../hooks/useOutSideClick";
 
 const DetailBtm = ({ id }) => {
   const [commentMenu, setCommentMenu] = useState(null);
@@ -12,10 +15,13 @@ const DetailBtm = ({ id }) => {
   };
 
   const handleCommentMenu = (id) => {
-    setCommentMenu(commentMenu === id ? null : id);
+    setCommentMenu((prev) => (prev === id ? null : id));
   };
 
-  const { data, loading, error } = useApi(`https://panda-market-api.vercel.app/products/${id}/comments?limit=10`);
+  const menuRef = useRef(null);
+  useOutSideClick(menuRef, () => setCommentMenu(null));
+
+  const { data, loading, error } = useApi(`${id}/comments?limit=10`);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -43,33 +49,42 @@ const DetailBtm = ({ id }) => {
         </button>
       </div>
       <ul className="comment_list">
-        {data.list.map((el) => {
-          return (
-            <li key={el.id}>
-              <div className="comment_menu">
-                <button type="button" className="btn_reset" onClick={() => handleCommentMenu(el.id)}>
-                  <img src={menuIcon} alt="" />
-                </button>
-                {commentMenu === el.id && (
-                  <ul>
-                    <li>
-                      <button type="button" className="btn_reset">
-                        수정하기
-                      </button>
-                    </li>
-                    <li>
-                      <button type="button" className="btn_reset">
-                        삭제하기
-                      </button>
-                    </li>
-                  </ul>
-                )}
-              </div>
-              <div className="text_area">{el.content}</div>
-              <ProfileBox img={el.writer.image} name={el.writer.nickname} date={el.updatedAt} />
-            </li>
-          );
-        })}
+        {data.list.length <= 0 ? (
+          <div className="comment_empty">
+            <div className="thum">
+              <img src={CommentEmpty} alt="아직 문의가 없어요 이미지" />
+            </div>
+            <p>아직 문의가 없어요</p>
+          </div>
+        ) : (
+          data.list.map((el) => {
+            return (
+              <li key={el.id}>
+                <div className="comment_menu">
+                  <button type="button" className="btn_reset" data-menu="button" onClick={() => handleCommentMenu(el.id)}>
+                    <img src={menuIcon} alt="댓글 옵션 열고닫기" />
+                  </button>
+                  {commentMenu === el.id && (
+                    <ul ref={menuRef}>
+                      <li>
+                        <button type="button" className="btn_reset">
+                          수정하기
+                        </button>
+                      </li>
+                      <li>
+                        <button type="button" className="btn_reset">
+                          삭제하기
+                        </button>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+                <div className="text_area">{el.content}</div>
+                <ProfileBox img={el.writer.image} name={el.writer.nickname} date={el.updatedAt} />
+              </li>
+            );
+          })
+        )}
       </ul>
     </div>
   );
