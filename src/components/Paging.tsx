@@ -1,7 +1,14 @@
 import "./Paging.css";
 import arrow from "./../assets/page_arrow.svg";
 
-const Paging = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => {
+interface Props {
+  totalItems: number;
+  itemsPerPage: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
+
+const Paging = ({ totalItems, itemsPerPage, currentPage, onPageChange }: Props) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const maxVisiblePages = 5; // 최대 보여줄 페이지 수
 
@@ -12,7 +19,7 @@ const Paging = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => {
   // 페이지 번호 배열 생성
   const pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
-  const handlePageClick = (page) => {
+  const handlePageClick = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       onPageChange(page);
     }

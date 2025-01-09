@@ -1,10 +1,18 @@
 import { useMediaQuery } from "react-responsive";
-import getProduct from "./api.jsx";
-import ProductItem from "./ProductItem.jsx";
+import getProduct from "./api";
+import ProductItem from "./ProductItem";
 import { useState, useEffect } from "react";
-import SubTitle from "./SubTitle.jsx";
+import SubTitle from "./SubTitle";
+import Product from "../types/Product";
+import { OrderQuery } from "../types/Query";
 
-const BestProduct = ({ col }) => {
+interface Props {
+  col: number;
+}
+
+type PageSizeQuery = number;
+
+const BestProduct = ({ col }: Props) => {
   const isTablet = useMediaQuery({
     query: "(max-width: 1200px)",
   });
@@ -12,15 +20,15 @@ const BestProduct = ({ col }) => {
     query: "(max-width: 768px)",
   });
 
-  const [items, setItems] = useState([]);
-  const [order, setOrder] = useState("favorite");
+  const [items, setItems] = useState<Product[]>([]);
+  const [order, setOrder] = useState<OrderQuery>("favorite");
   const [pageSize, setPageSize] = useState(isMobile ? 1 : isTablet ? 2 : 4);
 
   useEffect(() => {
     setPageSize(isMobile ? 1 : isTablet ? 2 : 4);
   }, [isMobile, isTablet]);
 
-  const handleLoad = async (orderQuery, pageSizeQuery) => {
+  const handleLoad = async (orderQuery: OrderQuery, pageSizeQuery: PageSizeQuery): Promise<void> => {
     const { list } = await getProduct({ order: orderQuery, pageSize: pageSizeQuery });
     setItems(list);
   };

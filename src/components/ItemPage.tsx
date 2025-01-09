@@ -1,6 +1,6 @@
 import { useMediaQuery } from "react-responsive";
-import BestProduct from "./BestProduct.jsx";
-import AllProduct from "./AllProduct.jsx";
+import BestProduct from "./BestProduct";
+import AllProduct from "./AllProduct";
 
 const ItemPage = () => {
   const isTablet = useMediaQuery({

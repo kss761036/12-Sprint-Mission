@@ -1,15 +1,25 @@
 import { useMediaQuery } from "react-responsive";
-import getProduct from "./api.jsx";
-import Paging from "./Paging.jsx";
-import ProductItem from "./ProductItem.jsx";
+import getProduct from "./api";
+import Paging from "./Paging";
+import ProductItem from "./ProductItem";
 import { useRef, useState, useEffect } from "react";
-import SubTitle from "./SubTitle.jsx";
+import SubTitle from "./SubTitle";
 import "./AllProduct.css";
 import selectIcon from "./../assets/icon_select.svg";
 import { Link } from "react-router-dom";
 import useOutSideClick from "../hooks/useOutSideClick";
+import Product from "../types/Product";
+import { OrderQuery, OrderKorQuery } from "../types/Query";
 
-const AllProduct = ({ col }) => {
+interface Props {
+  col: number;
+}
+
+type PageSizeQuery = number;
+type KeywordQuery = string;
+type PageQuery = number;
+
+const AllProduct = ({ col }: Props) => {
   const isTablet = useMediaQuery({
     query: "(max-width: 1200px)",
   });
@@ -17,8 +27,8 @@ const AllProduct = ({ col }) => {
     query: "(max-width: 768px)",
   });
 
-  const [items, setItems] = useState([]);
-  const [order, setOrder] = useState("recent");
+  const [items, setItems] = useState<Product[]>([]);
+  const [order, setOrder] = useState<OrderQuery>("recent");
   const [keyword, setKeyword] = useState("");
   const [orderName, setOrderName] = useState("최신순");
   const [pageSize, setPageSize] = useState(isMobile ? 4 : isTablet ? 6 : 10);
@@ -31,7 +41,7 @@ const AllProduct = ({ col }) => {
     setCurrentPage(1);
   }, [isMobile, isTablet]);
 
-  const handleLoad = async (orderQuery, pageSizeQuery, keywordQuery, pageQuery) => {
+  const handleLoad = async (orderQuery: OrderQuery, pageSizeQuery: PageSizeQuery, keywordQuery: KeywordQuery, pageQuery: PageQuery): Promise<void> => {
     const { list, totalCount } = await getProduct({ order: orderQuery, pageSize: pageSizeQuery, keyword: keywordQuery, page: pageQuery });
     setItems(list);
     setTotalItems(totalCount);
@@ -41,21 +51,26 @@ const AllProduct = ({ col }) => {
     handleLoad(order, pageSize, keyword, currentPage);
   }, [order, pageSize, keyword, currentPage]);
 
-  const handleOrderChange = (newOrder, newOrderName) => {
+  const handleOrderChange = (newOrder: OrderQuery, newOrderName: OrderKorQuery) => {
     setOrder(newOrder);
     setOrderName(newOrderName);
     setCurrentPage(1);
   };
 
-  const handleKeywordChange = (e) => {
+  const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
     setCurrentPage(1);
   };
 
-  const selectRef = useRef(null);
-  useOutSideClick(selectRef, () => selectRef.current.classList.remove("active"));
+  const selectRef = useRef<HTMLDivElement | null>(null);
 
-  const handleSelect = (e) => {
+  useOutSideClick(selectRef, () => {
+    if (selectRef.current) {
+      selectRef.current?.classList.remove("active");
+    }
+  });
+
+  const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     e.currentTarget.classList.toggle("active");
   };
@@ -95,7 +110,7 @@ const AllProduct = ({ col }) => {
           })}
         </ul>
       </div>
-      <Paging totalItems={totalItems} itemsPerPage={pageSize} currentPage={currentPage} onPageChange={(page) => setCurrentPage(page)} />
+      <Paging totalItems={totalItems} itemsPerPage={pageSize} currentPage={currentPage} onPageChange={(page: number) => setCurrentPage(page)} />
     </>
   );
 };
