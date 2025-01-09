@@ -5,23 +5,28 @@ import useApi from "./../hooks/useApi";
 import ProfileBox from "./ProfileBox";
 import CommentEmpty from "./../assets/comment_empty.png";
 import useOutSideClick from "../hooks/useOutSideClick";
+import Comment from "../types/Comment";
 
-const DetailBtm = ({ id }) => {
-  const [commentMenu, setCommentMenu] = useState(null);
+interface Props {
+  id?: string;
+}
+
+const DetailBtm = ({ id }: Props) => {
+  const [commentMenu, setCommentMenu] = useState<Props | null>(null);
   const [textValue, setTextValue] = useState("");
 
-  const handleTextChange = (e) => {
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextValue(e.target.value);
   };
 
-  const handleCommentMenu = (id) => {
+  const handleCommentMenu = (id: Props) => {
     setCommentMenu((prev) => (prev === id ? null : id));
   };
 
   const menuRef = useRef(null);
   useOutSideClick(menuRef, () => setCommentMenu(null));
 
-  const { data, loading, error } = useApi(`${id}/comments?limit=10`);
+  const { data, loading, error } = useApi<Comment>(`${id}/comments?limit=10`);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -49,7 +54,7 @@ const DetailBtm = ({ id }) => {
         </button>
       </div>
       <ul className="comment_list">
-        {data.list.length <= 0 ? (
+        {data?.list?.length === 0 ? (
           <div className="comment_empty">
             <div className="thum">
               <img src={CommentEmpty} alt="아직 문의가 없어요 이미지" />
@@ -57,11 +62,12 @@ const DetailBtm = ({ id }) => {
             <p>아직 문의가 없어요</p>
           </div>
         ) : (
-          data.list.map((el) => {
+          data?.list.map((el) => {
             return (
               <li key={el.id}>
                 <div className="comment_menu">
-                  <button type="button" className="btn_reset" data-menu="button" onClick={() => handleCommentMenu(el.id)}>
+                  <button type="button" className="btn_reset" data-menu="button" onClick={() => handleCommentMenu(el.id as any)}>
+                    {/* 질문하기 <button type="button" className="btn_reset" data-menu="button" onClick={() => handleCommentMenu({ id: String(el.id) })}> */}
                     <img src={menuIcon} alt="댓글 옵션 열고닫기" />
                   </button>
                   {commentMenu === el.id && (

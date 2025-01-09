@@ -8,6 +8,10 @@ import DetailBtm from "../components/DetailBtm";
 const ProductDetailPage = () => {
   const { id } = useParams();
 
+  if (!id) {
+    return <div className="error-message">잘못된 접근입니다.</div>;
+  }
+
   return (
     <main className="main">
       <div className="inner">

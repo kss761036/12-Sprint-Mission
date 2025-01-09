@@ -1,5 +1,5 @@
 export default interface Product {
-  createdAt: string;
+  createdAt: Date;
   favoriteCount: number;
   ownerNickname: string;
   ownerId: number;
