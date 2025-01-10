@@ -67,7 +67,7 @@ const DetailBtm = ({ id }: Props) => {
               <li key={el.id}>
                 <div className="comment_menu">
                   <button type="button" className="btn_reset" data-menu="button" onClick={() => handleCommentMenu(el.id as any)}>
-                    {/* 질문하기 <button type="button" className="btn_reset" data-menu="button" onClick={() => handleCommentMenu({ id: String(el.id) })}> */}
+                    {/* <button type="button" className="btn_reset" data-menu="button" onClick={() => handleCommentMenu({ id: String(el.id) })}> */}
                     <img src={menuIcon} alt="댓글 옵션 열고닫기" />
                   </button>
                   {commentMenu === el.id && (

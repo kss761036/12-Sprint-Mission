@@ -2,7 +2,7 @@ import SubTitle from "../components/SubTitle";
 import "./AddItemPage.css";
 import removeIcon from "./../assets/icon_remove.svg";
 import FormItem from "../components/FormItem";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEventHandler } from "react";
 import FormLabel from "../components/FormLabel";
 import "./../components/FormLabel.css";
 import { ItemInputQuery } from "../types/Query";
@@ -20,7 +20,7 @@ const AddItemPage = () => {
   const tagList = inputValue.tag.split("|");
 
   // 질문하기 const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {    <- handler의 차이 마우스 올렸을땐 handler가 있지만 오류가 남.. 빼야 오류가 없음
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
 
@@ -60,8 +60,7 @@ const AddItemPage = () => {
       e.preventDefault();
       handleChange("tag", fakeTag);
       // 질문하기 e.target.value에 주로 사용되던데 이유를 모르겠음.
-      const target = e.target as HTMLInputElement;
-      target.value = "";
+      e.currentTarget.value = "";
       setFakeTag("");
     }
   };
