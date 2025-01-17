@@ -1,32 +1,36 @@
 import fetchBoardList from "@/lib/fetch-board-list";
-import { InferGetServerSidePropsType } from "next";
 import styles from "./board.module.css";
 import BoardBestList from "@/components/board-best-list";
 import BoardList from "@/components/board-list";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Article } from "../../../types";
 
-export const getServerSideProps = async () => {
-  const list = await fetchBoardList(1, 3, "like");
-  const commonList = await fetchBoardList(1, 10, "recent");
-  return {
-    props: {
-      list,
-      commonList,
-    },
-  };
-};
-
-export default function Page({
-  list,
-  commonList,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Page() {
   const [sortState, setSortState] = useState(false);
   const [order, setOrder] = useState("recent");
+  const [list, setList] = useState<Article[]>([]);
+  const [commonList, setCommonList] = useState<Article[]>([]);
 
   const onSortToggle = () => {
     setSortState(!sortState);
   };
+
+  const fetchData = async () => {
+    try {
+      const bestResponse = await fetchBoardList(1, 3, "like");
+      const commonResponse = await fetchBoardList(1, 10, order);
+
+      setList(bestResponse);
+      setCommonList(commonResponse);
+    } catch (error) {
+      console.error("데이터 가져오기 실패:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [order]);
 
   const sortChange = (state: string) => {
     if (state !== order) {
@@ -40,7 +44,7 @@ export default function Page({
       <div className="common_title">베스트 게시글</div>
       <ul className={styles.board_best}>
         {list.length === 0 ? (
-          <p>데이터가 없습니다.</p>
+          <p></p>
         ) : (
           list.map((el) => <BoardBestList key={el.id} {...el} />)
         )}
@@ -81,7 +85,7 @@ export default function Page({
 
         <ul className={styles.board_common}>
           {commonList.length === 0 ? (
-            <p>데이터가 없습니다.</p>
+            <p></p>
           ) : (
             commonList.map((el) => <BoardList key={el.id} {...el} />)
           )}
