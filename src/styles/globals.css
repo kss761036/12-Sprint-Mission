@@ -139,3 +139,25 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
+
+.btn {
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 23px;
+  height: 42px;
+  border-radius: 8px;
+  background-color: #3692ff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
