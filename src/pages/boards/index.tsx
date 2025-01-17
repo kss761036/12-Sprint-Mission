@@ -9,6 +9,8 @@ import { Article } from "../../../types";
 export default function Page() {
   const [sortState, setSortState] = useState(false);
   const [order, setOrder] = useState("recent");
+  const [keyword, setKeyword] = useState("");
+  const [search, setSearch] = useState("");
   const [list, setList] = useState<Article[]>([]);
   const [commonList, setCommonList] = useState<Article[]>([]);
 
@@ -19,7 +21,7 @@ export default function Page() {
   const fetchData = async () => {
     try {
       const bestResponse = await fetchBoardList(1, 3, "like");
-      const commonResponse = await fetchBoardList(1, 10, order);
+      const commonResponse = await fetchBoardList(1, 10, order, keyword);
 
       setList(bestResponse);
       setCommonList(commonResponse);
@@ -30,13 +32,23 @@ export default function Page() {
 
   useEffect(() => {
     fetchData();
-  }, [order]);
+  }, [order, keyword]);
 
   const sortChange = (state: string) => {
     if (state !== order) {
       setOrder(state);
     }
     setSortState(false);
+  };
+
+  const onSearch: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const onSearchEnter: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter") {
+      setKeyword(search);
+    }
   };
 
   return (
@@ -60,7 +72,13 @@ export default function Page() {
         <div className={styles.board_common_sort}>
           <div className={styles.sch_box}>
             <img src="/assets/img/icon_search.svg" alt="검색" />
-            <input type="text" placeholder="검색할 상품을 입력해주세요" />
+            <input
+              type="text"
+              placeholder="검색할 상품을 입력해주세요"
+              onChange={onSearch}
+              value={search}
+              onKeyDown={onSearchEnter}
+            />
           </div>
           <div className={styles.select_box} onClick={onSortToggle}>
             <p>{order === "recent" ? "최신순" : "좋아요순"}</p>
