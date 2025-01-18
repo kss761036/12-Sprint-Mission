@@ -30,3 +30,19 @@
   color: #4b5563;
   font-weight: 700;
 }
+.header .my {
+  margin-left: auto;
+}
+
+@media (max-width: 744px) {
+  .header .logo {
+    margin-right: 4px;
+  }
+  .header .logo img {
+    height: 27px;
+  }
+  .header .menu > li > a {
+    padding: 0 4px;
+    font-size: 16px;
+  }
+}

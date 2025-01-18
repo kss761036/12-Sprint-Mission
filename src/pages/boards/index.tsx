@@ -5,6 +5,7 @@ import BoardList from "@/components/board-list";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Article } from "../../../types";
+import { useMediaQuery } from "react-responsive";
 
 export default function Page() {
   const [sortState, setSortState] = useState(false);
@@ -14,14 +15,20 @@ export default function Page() {
   const [list, setList] = useState<Article[]>([]);
   const [commonList, setCommonList] = useState<Article[]>([]);
 
+  const isMo = useMediaQuery({ query: "(max-width: 744px)" });
+  const isTa = useMediaQuery({ query: "(max-width: 1200px)" });
+
+  const pageSize = isMo ? 5 : isTa ? 7 : 10;
+  const bestPageSize = isMo ? 1 : isTa ? 2 : 3;
+
   const onSortToggle = () => {
     setSortState(!sortState);
   };
 
   const fetchData = async () => {
     try {
-      const bestResponse = await fetchBoardList(1, 3, "like");
-      const commonResponse = await fetchBoardList(1, 10, order, keyword);
+      const bestResponse = await fetchBoardList(1, bestPageSize, "like");
+      const commonResponse = await fetchBoardList(1, pageSize, order, keyword);
 
       setList(bestResponse);
       setCommonList(commonResponse);
@@ -32,7 +39,7 @@ export default function Page() {
 
   useEffect(() => {
     fetchData();
-  }, [order, keyword]);
+  }, [order, keyword, pageSize, bestPageSize]);
 
   const sortChange = (state: string) => {
     if (state !== order) {
@@ -81,7 +88,15 @@ export default function Page() {
             />
           </div>
           <div className={styles.select_box} onClick={onSortToggle}>
-            <p>{order === "recent" ? "최신순" : "좋아요순"}</p>
+            <p>
+              {isMo ? (
+                <img src="/assets/img/icon_sort.svg" alt="검색" />
+              ) : order === "recent" ? (
+                "최신순"
+              ) : (
+                "좋아요순"
+              )}
+            </p>
             {sortState && (
               <ul>
                 <li

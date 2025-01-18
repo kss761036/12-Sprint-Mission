@@ -69,7 +69,7 @@
 .select_box > ul {
   position: absolute;
   top: calc(100% + 5px);
-  left: 0;
+  right: 0;
   width: 100%;
   padding: 10px 0;
   border-radius: 12px;
@@ -86,4 +86,27 @@
 }
 .select_box > ul > li:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 1200px) {
+  .board_best {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 744px) {
+  .select_box {
+    min-width: 42px;
+    justify-content: center;
+    max-width: 42px;
+    padding: 0;
+    background: none;
+  }
+  .select_box > ul {
+    width: auto;
+  }
+  .select_box > ul > li {
+    white-space: nowrap;
+    padding-right: 20px;
+  }
 }
