@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Article } from "../../../types";
 import { useIsMo, useIsTa } from "@/hooks/useMediaQuery";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 export default function Page() {
   const [sortState, setSortState] = useState(false);
@@ -15,6 +16,8 @@ export default function Page() {
   const [list, setList] = useState<Article[]>([]);
   const [commonList, setCommonList] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageSize, setPageSize] = useState(10);
+  const [bestPageSize, setBestPageSize] = useState(3);
 
   const isMo = useIsMo();
   const isTa = useIsTa();
@@ -25,8 +28,18 @@ export default function Page() {
     setIsMount(true);
   }, []);
 
-  const pageSize = isMo && isMount ? 5 : isTa && isMount ? 7 : 10;
-  const bestPageSize = isMo && isMount ? 1 : isTa && isMount ? 2 : 3;
+  useEffect(() => {
+    if (isMo) {
+      setPageSize(5);
+      setBestPageSize(1);
+    } else if (isTa) {
+      setPageSize(7);
+      setBestPageSize(2);
+    } else {
+      setPageSize(10);
+      setBestPageSize(3);
+    }
+  }, [isMo, isTa, isMount]);
 
   const onSortToggle = () => {
     setSortState(!sortState);
@@ -69,6 +82,11 @@ export default function Page() {
       }, 100);
     }
   };
+
+  const ref = useOutsideClick(() => {
+    setSortState(false);
+  });
+
   /**
    * 질문하기 [Next.js + useMediaQuery]
    * 모바일, 태블릿 사이즈에서 새로고침 시 처음에 피씨가 잠깐 적용됨
@@ -79,6 +97,22 @@ export default function Page() {
     : isTa && isMount
     ? console.log("타블렛")
     : console.log("피씨");
+
+  const handleScroll = () => {
+    const bottom =
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight;
+    if (bottom) {
+      setPageSize((prevSize) => prevSize + 5);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -111,7 +145,7 @@ export default function Page() {
               onKeyDown={onSearchEnter}
             />
           </div>
-          <div className={styles.select_box} onClick={onSortToggle}>
+          <div className={styles.select_box} onClick={onSortToggle} ref={ref}>
             <div>
               {isMo && isMount ? (
                 <img src="/assets/img/icon_sort.svg" alt="검색" />

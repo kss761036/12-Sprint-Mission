@@ -28,7 +28,7 @@ export const useIsTa = () => {
 import { useMediaQuery } from "react-responsive";
 
 export const useIsMo = () => {
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 744px)" });
   return isMobile;
 };
 
