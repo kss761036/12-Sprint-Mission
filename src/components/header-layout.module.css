@@ -16,6 +16,12 @@
 .header .logo {
   margin-right: 32px;
 }
+.header .logo img.pc {
+  display: block;
+}
+.header .logo img.mo {
+  display: none;
+}
 .header .logo img {
   height: 40px;
 }
@@ -37,6 +43,12 @@
 @media (max-width: 744px) {
   .header .logo {
     margin-right: 4px;
+  }
+  .header .logo img.pc {
+    display: none;
+  }
+  .header .logo img.mo {
+    display: block;
   }
   .header .logo img {
     height: 27px;

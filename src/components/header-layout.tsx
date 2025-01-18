@@ -1,19 +1,22 @@
 import Link from "next/link";
 import styles from "./header-layout.module.css";
-import { useMediaQuery } from "react-responsive";
 
 export default function HeaderLayout() {
-  const isMo = useMediaQuery({ query: "(max-width: 744px)" });
   return (
     <header className={styles.header}>
       <div className="inner">
         <div className={styles.logo}>
           <a href="/">
-            {isMo ? (
-              <img src="/assets/img/logo_text.svg" alt="판다마켓 로고" />
-            ) : (
-              <img src="/assets/img/logo.svg" alt="판다마켓 로고" />
-            )}
+            <img
+              className={styles.mo}
+              src="/assets/img/logo_text.svg"
+              alt="판다마켓 로고"
+            />
+            <img
+              className={styles.pc}
+              src="/assets/img/logo.svg"
+              alt="판다마켓 로고"
+            />
           </a>
         </div>
         <ul className={styles.menu}>

@@ -5,7 +5,7 @@ import BoardList from "@/components/board-list";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Article } from "../../../types";
-import { useMediaQuery } from "react-responsive";
+import { useIsMo, useIsTa } from "@/hooks/useMediaQuery";
 
 export default function Page() {
   const [sortState, setSortState] = useState(false);
@@ -14,12 +14,19 @@ export default function Page() {
   const [search, setSearch] = useState("");
   const [list, setList] = useState<Article[]>([]);
   const [commonList, setCommonList] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const isMo = useMediaQuery({ query: "(max-width: 744px)" });
-  const isTa = useMediaQuery({ query: "(max-width: 1200px)" });
+  const isMo = useIsMo();
+  const isTa = useIsTa();
 
-  const pageSize = isMo ? 5 : isTa ? 7 : 10;
-  const bestPageSize = isMo ? 1 : isTa ? 2 : 3;
+  const [isMount, setIsMount] = useState(false);
+
+  useEffect(() => {
+    setIsMount(true);
+  }, []);
+
+  const pageSize = isMo && isMount ? 5 : isTa && isMount ? 7 : 10;
+  const bestPageSize = isMo && isMount ? 1 : isTa && isMount ? 2 : 3;
 
   const onSortToggle = () => {
     setSortState(!sortState);
@@ -34,6 +41,8 @@ export default function Page() {
       setCommonList(commonResponse);
     } catch (error) {
       console.error("데이터 가져오기 실패:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -55,15 +64,30 @@ export default function Page() {
   const onSearchEnter: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Enter") {
       setKeyword(search);
+      setTimeout(() => {
+        setSearch("");
+      }, 100);
     }
   };
+  /**
+   * 질문하기 [Next.js + useMediaQuery]
+   * 모바일, 태블릿 사이즈에서 새로고침 시 처음에 피씨가 잠깐 적용됨
+   * isMount를 적용해도 안됨..
+   */
+  isMo && isMount
+    ? console.log("모바일")
+    : isTa && isMount
+    ? console.log("타블렛")
+    : console.log("피씨");
 
   return (
     <>
       <div className="common_title">베스트 게시글</div>
       <ul className={styles.board_best}>
-        {list.length === 0 ? (
-          <p></p>
+        {isLoading ? (
+          <li className="empty_box">로딩 중...</li>
+        ) : list.length === 0 ? (
+          <li className="empty_box">게시글이 없습니다.</li>
         ) : (
           list.map((el) => <BoardBestList key={el.id} {...el} />)
         )}
@@ -88,15 +112,15 @@ export default function Page() {
             />
           </div>
           <div className={styles.select_box} onClick={onSortToggle}>
-            <p>
-              {isMo ? (
+            <div>
+              {isMo && isMount ? (
                 <img src="/assets/img/icon_sort.svg" alt="검색" />
               ) : order === "recent" ? (
                 "최신순"
               ) : (
                 "좋아요순"
               )}
-            </p>
+            </div>
             {sortState && (
               <ul>
                 <li
@@ -117,8 +141,10 @@ export default function Page() {
         </div>
 
         <ul className={styles.board_common}>
-          {commonList.length === 0 ? (
-            <p></p>
+          {isLoading ? (
+            <li className="empty_box">로딩 중...</li>
+          ) : commonList.length === 0 ? (
+            <li className="empty_box">게시글이 없습니다.</li>
           ) : (
             commonList.map((el) => <BoardList key={el.id} {...el} />)
           )}
