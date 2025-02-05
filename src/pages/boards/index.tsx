@@ -22,7 +22,6 @@ export default function Page() {
   const [bestPageSize, setBestPageSize] = useState(() =>
     isMo ? 1 : isTa ? 2 : 3
   );
-
   useEffect(() => {
     if (isMo) {
       setPageSize(5);
@@ -35,7 +34,6 @@ export default function Page() {
       setBestPageSize(3);
     }
   }, [isMo, isTa]);
-
   const onSortToggle = () => {
     setSortState(!sortState);
   };
